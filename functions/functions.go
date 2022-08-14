@@ -3,17 +3,13 @@ package functions
 import (
 	"fmt"
 	"log"
-	"os"
+	"math/big"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func EncryptDesEncrypt() {
-	origin := "lata amarelinha"
-	if len(os.Args) > 1 {
-		origin = os.Args[1]
-	}
+func EncryptDesEncrypt(origin string) {
 	fmt.Println("Original:", origin)
 	crypt := Crypt(origin)
 	fmt.Println("Criptografada:", crypt)
@@ -22,7 +18,7 @@ func EncryptDesEncrypt() {
 	fmt.Printf("A descriptografia ocorreu ok? %v", origin == decrypt)
 }
 func Crypt(text string) string {
-	l := NewListCrypt(text)
+	l := newListCrypt(text)
 	s := len(l) - 1
 	f := -1
 	var c []string
@@ -36,7 +32,7 @@ func Crypt(text string) string {
 	}
 	return strings.Join(c, "")
 }
-func NewListCrypt(text string) []string {
+func newListCrypt(text string) []string {
 	t2 := strings.ToUpper(text)
 	var l []string
 	for i := 0; i < len(t2); i++ {
@@ -102,17 +98,13 @@ func Decrypt(text string) string {
 		nl = append(nl, string(text[s]))
 		s = (s + f) % len(text)
 	}
-	nl = NewListCrypt(strings.Join(nl, ""))
+	nl = newListCrypt(strings.Join(nl, ""))
 	return strings.Join(nl, "")
 }
-func HorseRide() {
+func HorseRide(input string) {
 	baseString := "d4 f5 d6 e8 c7 a8 b6 a4 b2 d1 f2 h1 g3 h5 g7 e6 f8 d7 b8 a6 b4 a2 c1 e2 g1 h3 f4 d3 c5 e4 c3 d5 e3 c4 e5 c6 d8 b7 a5 b3 a1 c2 e1 g2 h4 g6 h8 f7 h6 g4 h2 f1 d2 b1 a3 b5 a7 c8 e7 g8 f6 h7 g5 f3"
 	baseSplit := strings.Split(baseString, " ")
 	size := len(baseSplit)
-	input := "b7"
-	if len(os.Args) > 1 {
-		input = os.Args[1]
-	}
 	ponto := ""
 	start := 0
 	for i := 0; i < size; i++ {
@@ -167,4 +159,36 @@ func Coordinate(coordinate string) (int, int) {
 	linha := int(coordinate[0] - 65)
 	var coll, _ = strconv.Atoi(string(coordinate[1]))
 	return linha, coll - 1
+}
+func FactInteractive(n int) (*big.Int, error) {
+	if n < 0 {
+		return nil, fmt.Errorf("Invalid number")
+	}
+	b := big.NewInt(1)
+	for i := 1; i <= n; i++ {
+		b.Mul(b, big.NewInt(int64(i)))
+	}
+	return b, nil
+}
+func FactoriaRestrito(n int) uint64 {
+	var a uint64 = 1
+	for i := 1; i <= n; i++ {
+		a *= uint64(i)
+	}
+	return a
+
+}
+func FibonacciRecursivo(n int) int64 {
+	if n > 1 {
+		return FibonacciRecursivo(n-1) + FibonacciRecursivo(n-2)
+	}
+	return int64(n)
+}
+func FibonacciIterativo(n int) int64 {
+	var a, b int64 = 0, 1
+	for i := 1; i < n; i++ {
+		b += a
+		a = b - a
+	}
+	return b
 }
