@@ -1,6 +1,6 @@
 package main
 
-import fn "github.com/djairdj/desafios-aleatorios-go/desafios"
+import fn "aleatorios/desafios"
 
 func main() {
 	fn.Desafios(2)

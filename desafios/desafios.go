@@ -1,7 +1,7 @@
 package functions
 
 import (
-	fn "github.com/djairdj/desafios-aleatorios-go/functions"
+	fn "aleatorios/functions"
 )
 
 func Desafios(option int) {
